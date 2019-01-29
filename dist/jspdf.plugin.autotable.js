@@ -1561,7 +1561,7 @@ function parseHtml(input, includeHiddenHtml, useCss) {
     if (includeHiddenHtml === void 0) { includeHiddenHtml = false; }
     if (useCss === void 0) { useCss = false; }
     var tableElement;
-    if (typeof input === 'string') {
+    if (typeof input === "string") {
         tableElement = window.document.querySelector(input);
     }
     else {
@@ -1588,21 +1588,28 @@ function parseTableSection(window, sectionElement, includeHidden, useCss) {
     for (var i = 0; i < sectionElement.rows.length; i++) {
         var row = sectionElement.rows[i];
         var resultRow = [];
-        var rowStyles = useCss ? cssParser_1.parseCss(row, state_1.default().scaleFactor(), ['cellPadding', 'lineWidth', 'lineColor']) : {};
+        var rowStyles = useCss
+            ? cssParser_1.parseCss(row, state_1.default().scaleFactor(), [
+                "cellPadding",
+                "lineWidth",
+                "lineColor"
+            ])
+            : {};
         for (var i_1 = 0; i_1 < row.cells.length; i_1++) {
             var cell = row.cells[i_1];
             var style = window.getComputedStyle(cell);
-            if (includeHidden || style.display !== 'none') {
+            if (includeHidden || style.display !== "none") {
                 var cellStyles = useCss ? cssParser_1.parseCss(cell, state_1.default().scaleFactor()) : {};
                 resultRow.push({
                     rowSpan: cell.rowSpan,
                     colSpan: cell.colSpan,
-                    styles: useCss ? polyfills_1.assign(rowStyles, cellStyles) : null,
+                    styles: useCss ? polyfills_1.assign({}, cellStyles) : null,
                     content: cell
                 });
             }
         }
-        if (resultRow.length > 0 && (includeHidden || rowStyles.display !== 'none')) {
+        if (resultRow.length > 0 &&
+            (includeHidden || rowStyles.display !== "none")) {
             resultRow._element = row;
             results.push(resultRow);
         }
